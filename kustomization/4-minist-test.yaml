@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: mnist-trainer-{{INCREMENTAL_NUMBER}}
+spec:   
+  template:
+    metadata:
+      labels:
+        job-type: trainer
+    spec:
+      restartPolicy: Never
+      containers:
+      - image: sufex00/mnist-flower:trainer-0.1 
+        args: ["--data", "/mnt/data/{{INCREMENTAL_NUMBER}}.npz", 
+               "--epoch", "{{EPOCH}}", "--batch", "{{BATCH}}", 
+               "--savemodel", "/mnt/model/{{INCREMENTAL_NUMBER}}-model.h5"]
+        imagePullPolicy: Always
+        name: mnist-trainer-job
+        volumeMounts:
+          - name: my-pvc-nfs
+            mountPath: "/mnt"
+
+      volumes:
+      - name: my-pvc-nfs
+        persistentVolumeClaim:
+          claimName: nfs
