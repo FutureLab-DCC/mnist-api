@@ -1,13 +1,16 @@
-FROM python:3.8
+FROM python:3.10
 LABEL maintainer="petronio.candido@gmail.com"
 RUN apt-get update
+
+ADD requirements.txt .
 
 RUN pip install -r requirements.txt
 RUN pip install -q flwr[simulation]
 
-WORKDIR /home
+WORKDIR /home/mnist-experiment
+
+COPY mnist-experiment .
 
 RUN git clone https://github.com/FutureLab-DCC/programming_api.git
 
-ADD ../minist-experiment/* .
 
