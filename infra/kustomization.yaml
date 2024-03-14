@@ -4,5 +4,3 @@ kind: Kustomization
 resources:
   - 1-nfs-deployment.yaml
   - 2-nfs-service.yaml
-  - 3-nfs-pv-pvc.yaml
-  - 4-mnist-test.yaml
