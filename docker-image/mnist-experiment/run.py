@@ -41,15 +41,12 @@ def evaluate_fn():
 
 if __name__ == '__main__':
 
-    id = 0
-    model = MNISTModel.MNISTModel(suffix = id)
-    dataset = MNISTDataset.MNISTDataset("./data/{}.npz".format(id), batch_size = 10, shuffle = False, num_workers = 0)
-    experiment = MNISTExperiment.MNISTExperiment(model, dataset, epochs = 1)
+    #id = 0
+    #model = MNISTModel.MNISTModel(suffix = id)
+    #dataset = MNISTDataset.MNISTDataset("./data/{}.npz".format(id), batch_size = 10, shuffle = False, num_workers = 0)
+    #experiment = MNISTExperiment.MNISTExperiment(model, dataset, epochs = 1)
 
-    experiment.train(model.get_parameters())
-    experiment.evaluate(model.get_parameters())
+    #experiment.train(model.get_parameters())
+    #experiment.evaluate(model.get_parameters())
 
-    #for img, lbl in dataset.dataloader():
-    #    print(len(img))
-
-    #run(generate_client_fn, evaluate_fn)
+    run(generate_client_fn, evaluate_fn)
