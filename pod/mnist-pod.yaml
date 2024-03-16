@@ -1,24 +1,17 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Pod
 metadata:
-  name: mnist-experiment
+  name: mnist-experiment-pod
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      role: mnist-experiment
-  template:
-    metadata:
-      labels:
-        role: mnist-experiment
-    spec:
-      containers:
-      - name: mnist-experiment
-        image: petroniocandido/mnist-experiment:0.1
-        volumeMounts:
-        - name: my-pvc-nfs
-          mountPath: "/mnt"
-      volumes:
-      - name: my-pvc-nfs
-        persistentVolumeClaim:
-          claimName: nfs
+  containers:
+  - name: mnist-experiment-pod
+    image: petroniocandido/mnist-experiment:0.1
+    command: ["/bin/bash"]
+    imagePullPolicy: Always
+    volumeMounts:
+    - name: my-pvc-nfs
+      mountPath: "/mnt"
+  volumes:
+  - name: my-pvc-nfs
+    persistentVolumeClaim:
+      claimName: nfs
