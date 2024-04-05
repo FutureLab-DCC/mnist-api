@@ -4,8 +4,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 class MNISTModel(Model):
-    def __init__(self, num_classes = 10, **kwargs):
-        super(MNISTModel, self).__init__(name = "MNIST-CNN", version = 1, id = 1, **kwargs)
+    def __init__(self, context, num_classes = 10, **kwargs):
+        super(MNISTModel, self).__init__( context, name = "MNIST-CNN", version = 1, id = 1, **kwargs)
         self.conv1 = nn.Conv2d(1, 6, 5)
         self.pool = nn.MaxPool2d(2, 2)
         self.conv2 = nn.Conv2d(6, 16, 5)

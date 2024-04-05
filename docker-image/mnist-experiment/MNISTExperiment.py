@@ -1,17 +1,18 @@
 from programming_api.Experiment import Experiment
-from programming_api.common import context, logger, metrics, measures
+from programming_api.common import metrics
 import MNISTModel, MNISTDataset
 import numpy as np
 
 import torch
 
 class MNISTExperiment(Experiment):
-    def __init__(self, model, dataset, **kwargs):
-        super(MNISTExperiment, self).__init__(model, dataset)
+    def __init__(self, model, dataset, measures, **kwargs):
+        super(MNISTExperiment, self).__init__(model, dataset, measures)
 
         self.criterion = torch.nn.CrossEntropyLoss()
         self.optimizer = torch.optim.SGD(self.model.parameters(), lr=0.01, momentum=0.9)
         self.epochs = kwargs.get('epochs', 1)
+        
 
     def training_loop(self, data_loader):
         self.criterion = torch.nn.CrossEntropyLoss()
@@ -30,8 +31,10 @@ class MNISTExperiment(Experiment):
                 _, predicted = torch.max(outputs.data, 1)
                 correct += (predicted == labels).sum().item()
 
-            measures.log(self, metrics.CROSSENTROPY, custo, epoch = epoca)
-            measures.log(self, metrics.ACCURACY, correct / len(self.dataset), epoch = epoca)
+            self.measures.log(self, metrics.CROSSENTROPY, custo, epoch = epoca)
+            self.measures.log(self, metrics.ACCURACY, correct / len(self.dataset), epoch = epoca)
+            
+        return custo, correct/ len(self.dataset)
 
     def validation_loop(self, data_loader):
         correct, loss = 0, 0.0
@@ -44,7 +47,7 @@ class MNISTExperiment(Experiment):
                 _, predicted = torch.max(outputs.data, 1)
                 correct += (predicted == labels).sum().item()
         accuracy = correct / len(self.dataset)
-        measures.log(self, metrics.CROSSENTROPY, loss, validation=True)
-        measures.log(self, metrics.ACCURACY, accuracy, validation=True)
+        self.measures.log(self, metrics.CROSSENTROPY, loss, validation=True)
+        self.measures.log(self, metrics.ACCURACY, accuracy, validation=True)
 
-        return loss, accuracy
+        return loss, correct/ len(self.dataset)
