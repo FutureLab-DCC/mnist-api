@@ -4,7 +4,7 @@ import MNISTDataset, MNISTModel, MNISTExperiment
 
 
 
-def generate_client_fn(context, measures):
+def generate_client_fn(context, measures, logger):
 
     def create_client_fn(id):
 
@@ -12,12 +12,12 @@ def generate_client_fn(context, measures):
         
         dataset = MNISTDataset.MNISTDataset("./data/{}.npz".format(id), batch_size = 10, shuffle = False, num_workers = 0)
         
-        return MNISTExperiment.MNISTExperiment(model, dataset)
+        return MNISTExperiment.MNISTExperiment(model, dataset, measures, logger)
         
     return create_client_fn
     
 
-def evaluate_fn(context, measures):
+def evaluate_fn(context, measures, logger):
     def fn(server_round, parameters, config):
         """This function is executed by the strategy it will instantiate
         a model and replace its parameters with those from the global model.
@@ -29,7 +29,7 @@ def evaluate_fn(context, measures):
         
         dataset = MNISTDataset.MNISTDataset('./data/1.npz', batch_size = 10, shuffle = False, num_workers = 0)
         
-        experiment = MNISTExperiment.MNISTExperiment(model, dataset)
+        experiment = MNISTExperiment.MNISTExperiment(model, dataset, measures, logger)
 
         
         #params_dict = zip(model.state_dict().keys(), parameters)
@@ -57,7 +57,7 @@ if __name__ == '__main__':
     #experiment.evaluate(model.get_parameters(), 0)
     
     
-    client_fn_callback = generate_client_fn(context, measures)
-    evaluate_fn_callback = evaluate_fn(context, measures)
+    client_fn_callback = generate_client_fn(context, measures, logger)
+    evaluate_fn_callback = evaluate_fn(context, measures, logger)
 
     run(client_fn_callback, evaluate_fn_callback)
