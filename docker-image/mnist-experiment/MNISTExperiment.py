@@ -6,8 +6,8 @@ import time
 import torch
 
 class MNISTExperiment(Experiment):
-    def __init__(self, model, dataset, measures, logger, **kwargs):
-        super(MNISTExperiment, self).__init__(model, dataset, measures, logger)
+    def __init__(self, model, dataset, measures, logger, context, **kwargs):
+        super(MNISTExperiment, self).__init__(model, dataset, measures, logger, context, **kwargs)
 
         self.criterion = torch.nn.CrossEntropyLoss()
         self.optimizer = torch.optim.SGD(self.model.parameters(), lr=0.01, momentum=0.9)

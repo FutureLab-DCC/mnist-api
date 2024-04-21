@@ -12,7 +12,7 @@ def generate_client_fn(context, measures, logger):
         
         dataset = MNISTDataset.MNISTDataset("./data/{}.npz".format(id), batch_size = 10, shuffle = False, num_workers = 0)
         
-        return MNISTExperiment.MNISTExperiment(model, dataset, measures, logger)
+        return MNISTExperiment.MNISTExperiment(model, dataset, measures, logger, context)
         
     return create_client_fn
     
@@ -29,7 +29,7 @@ def evaluate_fn(context, measures, logger):
         
         dataset = MNISTDataset.MNISTDataset('./data/1.npz', batch_size = 10, shuffle = False, num_workers = 0)
         
-        experiment = MNISTExperiment.MNISTExperiment(model, dataset, measures, logger)
+        experiment = MNISTExperiment.MNISTExperiment(model, dataset, measures, logger, context)
 
         
         #params_dict = zip(model.state_dict().keys(), parameters)
