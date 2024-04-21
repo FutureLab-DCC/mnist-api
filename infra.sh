@@ -28,3 +28,5 @@ if [ -z "$dfs_test" ]; then
 fi
 
 kubectl get all
+
+
