@@ -42,7 +42,7 @@ def evaluate_fn(context, measures, logger):
 
     return fn
 
-#python3 run.py --user 0 --path data/ --dbuser futurelab --dbpw futurelab --dbport 27017
+#python3 run.py --IDexperiment Ex1 --user 0 --path data/ --dbuser futurelab --dbpw futurelab --dbport 27017
 
 if __name__ == '__main__':
 
