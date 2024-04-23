@@ -6,6 +6,7 @@ ADD requirements.txt .
 
 RUN pip install -r requirements.txt
 RUN pip install -q flwr[simulation]
+RUN apt-get git vim jupyterlab
 
 WORKDIR /home/mnist-experiment
 
