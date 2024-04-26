@@ -5,7 +5,7 @@ metadata:
 spec:
   containers:
   - name: mnist-experiment-pod
-    image: petroniocandido/mnist-experiment:0.1
+    image: petroniocandido/mnist-experiment:0.4
     command: ["/bin/bash"]
     imagePullPolicy: Always
     volumeMounts:
@@ -15,3 +15,4 @@ spec:
   - name: my-pvc-nfs
     persistentVolumeClaim:
       claimName: nfs
+

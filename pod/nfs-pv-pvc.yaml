@@ -8,18 +8,19 @@ spec:
   accessModes:
     - ReadWriteMany
   nfs:
-    server: nfs-server.default.svc.cluster.local
+    server: {{NFS_CLUSTER_IP}}
     path: "/"
 
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: nfs
+  name: experiment-pvc
 spec:
   accessModes:
     - ReadWriteMany
-  storageClassName: ""
+  storageClassName: "nfs"
   resources:
     requests:
       storage: 10Gi
+
