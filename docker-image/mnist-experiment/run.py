@@ -4,6 +4,7 @@ import MNISTDataset, MNISTModel, MNISTExperiment
 
 
 
+
 def generate_client_fn(context, measures, logger):
 
     def create_client_fn(id):
@@ -45,6 +46,7 @@ def evaluate_fn(context, measures, logger):
 #python3 run.py --IDexperiment Ex1 --user 0 --path data/ --dbuser futurelab --dbpw futurelab --dbport 27017
 
 if __name__ == '__main__':
+
 
     parser, context, backend, logger, measures = get_argparser()
 

@@ -50,7 +50,20 @@ class MNISTExperiment(Experiment):
                 correct += (predicted == labels).sum().item()
         accuracy = correct / len(self.dataset)
         #self.measures.log(self, metrics.CROSSENTROPY, loss, validation=True)
-        time.sleep(1)
         #self.measures.log(self, metrics.ACCURACY, accuracy, validation=True)
 
         return loss, correct/len(self.dataset)
+        
+    def weighted_average(self, FL_metrics, server_round):
+    
+        accuracies = [ m["accuracy"] for num_examples, m in FL_metrics]
+        losses = [ m["loss"] for num_examples, m in FL_metrics]
+    
+        examples = [num_examples for num_examples, _ in FL_metrics]
+        
+        self.epoch_fl = server_round
+        
+        self.measures.log(self, metrics.CROSSENTROPY, sum(accuracies) / len(accuracies), validation=True)
+        self.measures.log(self, metrics.ACCURACY, sum(losses) / len(losses), validation=True)
+
+        return {"accuracy": sum(accuracies) / len(accuracies)}
