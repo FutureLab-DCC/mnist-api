@@ -6,12 +6,14 @@ import MNISTDataset, MNISTModel, MNISTExperiment
 
 
 def generate_client_fn(context, measures, logger):
+    
 
     def create_client_fn(id):
+    
 
         model = MNISTModel.MNISTModel(context, suffix = id)
         
-        dataset = MNISTDataset.MNISTDataset("./data/{}.npz".format(id), batch_size = 10, shuffle = False, num_workers = 0)
+        dataset = MNISTDataset.MNISTDataset(context.path +"/data/{}.npz".format(id), batch_size = 10, shuffle = False, num_workers = 0)
         
         return MNISTExperiment.MNISTExperiment(model, dataset, measures, logger, context)
         
@@ -28,7 +30,7 @@ def evaluate_fn(context, measures, logger):
         model = MNISTModel.MNISTModel(context)
         model.set_parameters(parameters)
         
-        dataset = MNISTDataset.MNISTDataset('./data/1.npz', batch_size = 10, shuffle = False, num_workers = 0)
+        dataset = MNISTDataset.MNISTDataset(context.path +"/data/1.npz", batch_size = 10, shuffle = False, num_workers = 0)
         
         experiment = MNISTExperiment.MNISTExperiment(model, dataset, measures, logger, context)
 
@@ -57,6 +59,10 @@ if __name__ == '__main__':
     
     #experiment.fit(model.get_parameters(), 0)
     #experiment.evaluate(model.get_parameters(), 0)
+    
+    import os
+    
+    os.makedirs('/mnt/models', exist_ok=True)
     
     
     client_fn_callback = generate_client_fn(context, measures, logger)
