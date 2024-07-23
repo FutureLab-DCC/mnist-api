@@ -13,6 +13,10 @@ WORKDIR /home/mnist-experiment
 
 COPY mnist-experiment .
 
-RUN git clone https://github.com/FutureLab-DCC/programming_api.git
+RUN git clone https://github.com/FutureLab-DCC/flautim_api.git
 
+WORKDIR /home/mnist-experiment/flautim_api
 
+RUN python3 -m pip install --upgrade build
+
+WORKDIR /home/mnist-experiment

@@ -1,4 +1,4 @@
-from programming_api.Dataset import Dataset 
+from flautim.Dataset import Dataset 
 import numpy as np
 import torch
 from torchvision.datasets import MNIST

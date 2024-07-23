@@ -1,8 +1,6 @@
-from programming_api.common import run, get_argparser
-from programming_api import Model, Dataset, Experiment
+from flautim.common import run, get_argparser
+from flautim import Model, Dataset, Experiment
 import MNISTDataset, MNISTModel, MNISTExperiment
-
-
 
 
 def generate_client_fn(context, measures, logger):
