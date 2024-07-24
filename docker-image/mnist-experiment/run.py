@@ -50,13 +50,6 @@ if __name__ == '__main__':
 
     parser, context, backend, logger, measures = get_argparser()
 
-    #id = 0
-    #model = MNISTModel.MNISTModel(context, suffix = id)
-    #dataset = MNISTDataset.MNISTDataset("./data/{}.npz".format(id), batch_size = 10, shuffle = False, num_workers = 0)
-    #experiment = MNISTExperiment.MNISTExperiment(model, dataset, measures, epochs = 1)
-    
-    #experiment.fit(model.get_parameters(), 0)
-    #experiment.evaluate(model.get_parameters(), 0)
     
     import os
     
