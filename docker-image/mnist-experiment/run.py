@@ -11,7 +11,7 @@ def generate_client_fn(context, measures, logger):
 
         model = MNISTModel.MNISTModel(context, suffix = id)
         
-        dataset = MNISTDataset.MNISTDataset(context.path +"/data/{}.npz".format(id), batch_size = 10, shuffle = False, num_workers = 0)
+        dataset = MNISTDataset.MNISTDataset(context.path +"data/{}.npz".format(id), batch_size = 10, shuffle = False, num_workers = 0)
         
         return MNISTExperiment.MNISTExperiment(model, dataset, measures, logger, context)
         
@@ -28,14 +28,9 @@ def evaluate_fn(context, measures, logger):
         model = MNISTModel.MNISTModel(context)
         model.set_parameters(parameters)
         
-        dataset = MNISTDataset.MNISTDataset(context.path +"/data/1.npz", batch_size = 10, shuffle = False, num_workers = 0)
+        dataset = MNISTDataset.MNISTDataset(context.path +"data/1.npz", batch_size = 10, shuffle = False, num_workers = 0)
         
         experiment = MNISTExperiment.MNISTExperiment(model, dataset, measures, logger, context)
-
-        
-        #params_dict = zip(model.state_dict().keys(), parameters)
-        #state_dict = OrderedDict({k: torch.Tensor(v) for k, v in params_dict})
-        #model.load_state_dict(state_dict, strict=True)
         
         loss, accuracy = experiment.validation_loop(dataset.dataloader(validation=True)) 
 
@@ -43,17 +38,10 @@ def evaluate_fn(context, measures, logger):
 
     return fn
 
-#python3 run.py --IDexperiment Ex1 --user 0 --path data/ --dbuser futurelab --dbpw futurelab --dbport 27017
-
 if __name__ == '__main__':
 
 
     parser, context, backend, logger, measures = get_argparser()
-
-    
-    import os
-    
-    os.makedirs('/mnt/models', exist_ok=True)
     
     
     client_fn_callback = generate_client_fn(context, measures, logger)
