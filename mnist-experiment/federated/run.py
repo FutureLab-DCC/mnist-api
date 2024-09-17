@@ -1,17 +1,20 @@
-from flautim.common import run, get_argparser
-from flautim import Model, Dataset, Experiment
+from flautim.pytorch.common import run_federated, get_argparser
+from flautim.pytorch import Model, Dataset
+from flautim.pytorch.federated import Experiment
 import MNISTDataset, MNISTModel, MNISTExperiment
-
 
 def generate_client_fn(context, measures, logger):
     
-
     def create_client_fn(id):
     
-
         model = MNISTModel.MNISTModel(context, suffix = id)
+
+        if str(id) != 'FL-Global':
+            file = '0'
+        else:
+            file = str(id)
         
-        dataset = MNISTDataset.MNISTDataset(context.path +"data/{}.npz".format(id), batch_size = 10, shuffle = False, num_workers = 0)
+        dataset = MNISTDataset.MNISTDataset(context.path +"data/{}.npz".format(file), batch_size = 10, shuffle = False, num_workers = 0)
         
         return MNISTExperiment.MNISTExperiment(model, dataset, measures, logger, context)
         
@@ -47,4 +50,4 @@ if __name__ == '__main__':
     client_fn_callback = generate_client_fn(context, measures, logger)
     evaluate_fn_callback = evaluate_fn(context, measures, logger)
 
-    run(client_fn_callback, evaluate_fn_callback)
+    run_federated(client_fn_callback, evaluate_fn_callback)

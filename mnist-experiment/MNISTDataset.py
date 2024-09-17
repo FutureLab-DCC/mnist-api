@@ -1,4 +1,4 @@
-from flautim.Dataset import Dataset 
+from flautim.pytorch.Dataset import Dataset 
 import numpy as np
 import torch
 from torchvision.datasets import MNIST
@@ -11,7 +11,14 @@ class MNISTDataset(Dataset):
     def __init__(self, data_path, **kwargs):
         super(MNISTDataset, self).__init__("MNIST", **kwargs)
         
-        mnist = np.load(data_path)
+        if isinstance(data_path, list):
+            mnist = np.load(data_path[0])
+
+            for ct in range(1,len(data_path)):
+                tmp = np.load(data_path[ct])
+                mnist.vstack(tmp)
+        else:
+             mnist = np.load(data_path)
         
         self.images = mnist['x']
         self.labels = mnist['y']
