@@ -1,5 +1,5 @@
-from flautim.Experiment import Experiment
-from flautim.common import metrics
+from flautim.pytorch.centralized.Experiment import Experiment
+from flautim.pytorch.common import metrics
 import MNISTModel, MNISTDataset
 import numpy as np
 import time

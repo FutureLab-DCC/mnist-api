@@ -13,15 +13,17 @@ class MNISTDataset(Dataset):
         
         if isinstance(data_path, list):
             mnist = np.load(data_path[0])
+            self.images = mnist['x']
+            self.labels = mnist['y']
 
             for ct in range(1,len(data_path)):
                 tmp = np.load(data_path[ct])
-                mnist.vstack(tmp)
+                self.images = np.vstack((self.images, tmp['x']))
+                self.labels = np.vstack((self.labels, tmp['y']))
         else:
-             mnist = np.load(data_path)
-        
-        self.images = mnist['x']
-        self.labels = mnist['y']
+            mnist = np.load(data_path)
+            self.images = mnist['x']
+            self.labels = mnist['y']
 
         self.transform = transforms.Compose([
             transforms.ToTensor(),

@@ -1,4 +1,4 @@
-from flautim.Model import Model
+from flautim.pytorch.Model import Model
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
