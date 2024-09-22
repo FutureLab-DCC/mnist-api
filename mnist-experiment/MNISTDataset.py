@@ -14,12 +14,14 @@ class MNISTDataset(Dataset):
         if isinstance(data_path, list):
             mnist = np.load(data_path[0])
             self.images = mnist['x']
-            self.labels = mnist['y']
+            self.labels = mnist['y'].flatten()
 
             for ct in range(1,len(data_path)):
                 tmp = np.load(data_path[ct])
                 self.images = np.vstack((self.images, tmp['x']))
                 self.labels = np.vstack((self.labels, tmp['y']))
+            
+            self.labels = self.labels.flatten()
         else:
             mnist = np.load(data_path)
             self.images = mnist['x']
