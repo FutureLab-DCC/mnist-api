@@ -1,6 +1,6 @@
 from flautim.pytorch.common import run_centralized, get_argparser
 from flautim.pytorch import Model, Dataset
-from flautim.pytorch.federated import Experiment
+from flautim.pytorch.centralized import Experiment
 import MNISTDataset, MNISTModel, MNISTExperiment
 
 if __name__ == '__main__':
